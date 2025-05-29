@@ -42,6 +42,7 @@
       .plushie-img {
         width: 240px;
         transition: transform 0.1s ease;
+        object-fit: cover;
       }
 
       .plushie-img:active {
@@ -49,11 +50,11 @@
       }
 
       .perk {
-        margin-top: 2rem;
-        padding: 1.2rem 2rem;
+        margin-top: 1rem;
+        padding: 1rem 1.5rem;
         border: 2px solid var(--border);
         border-radius: 1.5rem;
-        font-size: 1.2rem;
+        font-size: 1.1rem;
         font-weight: 500;
         background-color: white;
         box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
@@ -72,30 +73,76 @@
         color: var(--accent);
         border-color: var(--accent);
       }
+
+      .heart {
+        position: fixed;
+        bottom: 10px;
+        font-size: 2rem;
+        animation: floatUp 2s ease-out forwards;
+        color: var(--accent);
+        left: 50%;
+        transform: translateX(-50%);
+      }
+
+      @keyframes floatUp {
+        0% {
+          transform: translate(-50%, 0);
+          opacity: 1;
+        }
+        100% {
+          transform: translate(-50%, -200px);
+          opacity: 0;
+        }
+      }
     </style>
   </head>
   <body>
     <header>Plushie Clicks: <span id="click-count">0</span></header>
 
     <button class="plushie-button" onclick="clickPlushie()">
-      <img src="hello-kitty-click.png" alt="Cute Plushie" class="plushie-img" />
+      <img id="plushie-img" src="hello-kitty-click.png" alt="Cute Plushie" class="plushie-img" />
     </button>
 
-    <div id="perk" class="perk locked">✨ Help brzusio bolusio feel better (Locked) ✨</div>
+    <div id="perk-100" class="perk locked">✨ Help brzusio bolusio feel better (Locked) ✨</div>
+    <div id="perk-250" class="perk locked">🧸 Stronger and Warmer Kuroforek! (Locked)</div>
+    <div id="perk-400" class="perk locked">🌟 New Plushies! (Locked)</div>
+    <div id="perk-1250" class="perk locked" style="display: none">❤️ We are with you Maja! Brzusio bolusio needs love too! ❤️</div>
 
     <script>
       let count = 0;
       const countDisplay = document.getElementById("click-count");
-      const perk = document.getElementById("perk");
+      const plushieImg = document.getElementById("plushie-img");
+
+      function unlock(id, text) {
+        const perk = document.getElementById(id);
+        perk.classList.remove("locked");
+        perk.classList.add("unlocked");
+        perk.textContent = text;
+      }
+
+      function showHeartMessage() {
+        const heart = document.createElement("div");
+        heart.className = "heart";
+        heart.textContent = "❤️";
+        document.body.appendChild(heart);
+        setTimeout(() => heart.remove(), 2000);
+
+        const hidden = document.getElementById("perk-1250");
+        hidden.style.display = "block";
+        unlock("perk-1250", "❤️ We are with you Maja! Brzusio bolusio needs love too! ❤️");
+      }
 
       function clickPlushie() {
         count++;
         countDisplay.textContent = count;
-        if (count >= 100) {
-          perk.classList.remove("locked");
-          perk.classList.add("unlocked");
-          perk.textContent = "✨ Help brzusio bolusio feel better unlocked! ✨";
+
+        if (count === 100) unlock("perk-100", "✨ Help brzusio bolusio feel better unlocked! ✨");
+        if (count === 250) unlock("perk-250", "🧸 Stronger and Warmer Kuroforek unlocked!");
+        if (count === 600) {
+          unlock("perk-400", "🌟 New Plushies Unlocked!");
+          plushieImg.src = "pompompurin-click.png"; // pompompurin image
         }
+        if (count === 1250) showHeartMessage();
       }
     </script>
   </body>
