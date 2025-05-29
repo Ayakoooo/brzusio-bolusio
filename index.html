@@ -107,7 +107,6 @@
     <div id="perk-250" class="perk locked">🧸 Stronger and Warmer Kuroforek! (Locked)</div>
     <div id="perk-400" class="perk locked">🌟 New Plushies! (Locked)</div>
     <div id="perk-1250" class="perk locked" style="display: none">❤️ We are with you Maja! Brzusio bolusio needs love too! ❤️</div>
-
     <script>
       let count = 0;
       const countDisplay = document.getElementById("click-count");
@@ -138,9 +137,9 @@
 
         if (count === 100) unlock("perk-100", "✨ Help brzusio bolusio feel better unlocked! ✨");
         if (count === 250) unlock("perk-250", "🧸 Stronger and Warmer Kuroforek unlocked!");
-        if (count === 600) {
+        if (count === 400) {
           unlock("perk-400", "🌟 New Plushies Unlocked!");
-          plushieImg.src = "pompompurin-click.png"; // pompompurin image
+          plushieImg.src = "pompompurin-click.png";
         }
         if (count === 1250) showHeartMessage();
       }
